@@ -4,86 +4,99 @@
 
 package frc.robot;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
-
-// import edu.wpi.first.util.sendable.SendableRegistry;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-// import edu.wpi.first.wpilibj.motorcontrol.PWMMotorController;
-// import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
-// import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 /**
- * This is a demo program showing the use of the DifferentialDrive class. Runs the motors with
- * arcade steering.
+ * The VM is configured to automatically run this class, and to call the functions corresponding to
+ * each mode, as described in the TimedRobot documentation. If you change the name of this class or
+ * the package after creating this project, you must also update the build.gradle file in the
+ * project.
  */
 public class Robot extends TimedRobot {
+  private Command m_autonomousCommand;
 
-  // The motors on the left side of the drive.
-  private final CANSparkMax m_leftMotor = new CANSparkMax(5, MotorType.kBrushed);
-  private final CANSparkMax m_leftFollower = new CANSparkMax(4, MotorType.kBrushed);
+  private RobotContainer m_robotContainer;
 
-  // The motors on the right side of the drive.
-  private final CANSparkMax m_rightMotor = new CANSparkMax(3, MotorType.kBrushed);
-  private final CANSparkMax m_rightFollower = new CANSparkMax(2, MotorType.kBrushed);
-  private final CANSparkMax m_shootorMotor = new CANSparkMax(1, MotorType.kBrushed);
-  
-  private final DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftMotor::set, m_rightMotor::set);
-  private final Joystick m_stick = new Joystick(0);
-
-  public Robot() {
-    
-    m_rightFollower.follow(m_rightMotor);
-    m_leftFollower.follow(m_leftMotor);
-
-    // We need to invert one side of the drivetrain so that positive voltages
-    // result in both sides moving forward. Depending on how your robot's
-    // gearbox is constructed, you might have to invert the left side instead.
-    //m_rightFollower.setInverted(true);
-
-   // SendableRegistry.addChild(m_robotDrive, m_leftMotor);
-    //SendableRegistry.addChild(m_robotDrive, m_rightMotor);
-  }
-
+  /**
+   * This function is run when the robot is first started up and should be used for any
+   * initialization code.
+   */
   @Override
   public void robotInit() {
-    // We need to invert one side of the drivetrain so that positive voltages
-    // result in both sides moving forward. Depending on how your robot's
-    // gearbox is constructed, you might have to invert the left side instead.
-    m_leftMotor.setInverted(true);
+    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+    // autonomous chooser on the dashboard.
+    m_robotContainer = new RobotContainer();
   }
+
+  /**
+   * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
+   * that you want ran during disabled, autonomous, teleoperated and test.
+   *
+   * <p>This runs after the mode specific periodic functions, but before LiveWindow and
+   * SmartDashboard integrated updating.
+   */
+  @Override
+  public void robotPeriodic() {
+    // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
+    // commands, running already-scheduled commands, removing finished or interrupted commands,
+    // and running subsystem periodic() methods.  This must be called from the robot's periodic
+    // block in order for anything in the Command-based framework to work.
+    CommandScheduler.getInstance().run();
+  }
+
+  /** This function is called once each time the robot enters Disabled mode. */
+  @Override
+  public void disabledInit() {}
 
   @Override
-  public void teleopPeriodic() {
-    // Drive with arcade drive.
-    // That means that the Y axis drives forward
-    // and backward, and the X turns left and right.
-   
-    m_robotDrive.arcadeDrive(m_stick.getRawAxis(1), m_stick.getRawAxis(0));
-    
+  public void disabledPeriodic() {}
 
-    if (m_stick.getRawButtonPressed(1)) {
-      m_shootorMotor.set(0.4);
+  /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+  @Override
+  public void autonomousInit() {
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+
+    /*
+     * String autoSelected = SmartDashboard.getString("Auto Selector",
+     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
+     * = new MyAutoCommand(); break; case "Default Auto": default:
+     * autonomousCommand = new ExampleCommand(); break; }
+     */
+
+    // schedule the autonomous command (example)
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.schedule();
     }
-
-    if (m_stick.getRawButton(2)){
-      m_shootorMotor.set(-0.4);
-    }
-
-    if (m_stick.getRawButtonReleased(1)){
-
-      m_shootorMotor.set(0);
-    }
-
-    if (m_stick.getRawButtonReleased(2)){
-      m_shootorMotor.set(0);
-    }
-    
-
-
-    }
-  
   }
 
+  /** This function is called periodically during autonomous. */
+  @Override
+  public void autonomousPeriodic() {}
+
+  @Override
+  public void teleopInit() {
+    // This makes sure that the autonomous stops running when
+    // teleop starts running. If you want the autonomous to
+    // continue until interrupted by another command, remove
+    // this line or comment it out.
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.cancel();
+    }
+  }
+
+  /** This function is called periodically during operator control. */
+  @Override
+  public void teleopPeriodic() {}
+
+  @Override
+  public void testInit() {
+    // Cancels all running commands at the start of test mode.
+    CommandScheduler.getInstance().cancelAll();
+  }
+
+  /** This function is called periodically during test mode. */
+  @Override
+  public void testPeriodic() {}
+}
