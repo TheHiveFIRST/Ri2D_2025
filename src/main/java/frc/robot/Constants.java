@@ -99,4 +99,16 @@ public final class Constants {
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
   }
+  public static final class ElevatorConstants {   
+    public static final int kElevatorMotorCanId = 10;
+    public static final int kElevatorFollowerCanId = 9;
+    public static final int KP = 0;
+    public static final int KI = 0;
+    public static final int KD = 0;
+    public static final int KEncoderChannelA = 0;
+    public static final int KEncoderChannelB = 0;
+
+  
+    
+  }
 }

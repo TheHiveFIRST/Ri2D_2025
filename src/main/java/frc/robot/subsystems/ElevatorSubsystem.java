@@ -1,26 +1,51 @@
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
+package frc.robot.subsystems;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
 import com.revrobotics.AbsoluteEncoder; 
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkBaseConfig;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 public class ElevatorSubsystem extends SubsystemBase {
 //create elevator motors 
-private CanSparkMax m_elevatorMotor; 
-private CanSparkMax m_elevatorFollower; 
+private SparkMax m_elevatorFollower; 
+private SparkMax m_elevatorMotor;
 
-private AbsoluteElevator m_elevatorEncoder; 
+private SparkMaxConfig followerconfig;
+private SparkMaxConfig elevatorconfig;
+
+private PIDController elevatorPID;
+private Encoder elevatorEncoder;
  
-public Elevator() {
+public ElevatorSubsystem() {
 
     //value for bottom of elevator 
-    this.m_elevatorMotor = new CanSparkMax (port, type); 
-    this.m_elevatorFollower = new CanSparkMax(port, MotorType); 
+    this.m_elevatorMotor = new SparkMax (Constants.ElevatorConstants.kElevatorMotorCanId, MotorType.kBrushless); 
+    this.m_elevatorFollower = new SparkMax(Constants.ElevatorConstants.kElevatorFollowerCanId,MotorType.kBrushless ); 
 
-    this.m_elevatorFollower.follow(this.m_elevatorMotor); 
+    elevatorEncoder = new Encoder(Constants.ElevatorConstants.KEncoderChannelA, Constants.ElevatorConstants.KEncoderChannelB, false);
+    elevatorPID = new PIDController(Constants.ElevatorConstants.KP,Constants.ElevatorConstants.KI, Constants.ElevatorConstants.KD);
+    
+    followerconfig = new SparkMaxConfig();
+    elevatorconfig = new SparkMaxConfig();
+    
+    followerconfig.idleMode(IdleMode.kBrake);
+    elevatorconfig.idleMode(IdleMode.kBrake);
+    
+    elevatorconfig.inverted(false);
+    followerconfig.inverted(true);
 
-    this.m_elevatorFollower.setInverted(true); 
-    this.m_elevatorEncoder = new DutyCycleEncoder (0,4.0,2.0); 
+    m_elevatorMotor.configure(elevatorconfig, null, null);
+    m_elevatorFollower.configure(followerconfig, null, null);
 }
 
 public void ElevatorUp(){
@@ -30,10 +55,4 @@ public void ElevatorUp(){
 public void ElevatorDown(){
     this.m_elevatorMotor.set(-0.2); 
 }
-
-public double ElevatorTestValue(){
-    m_elevetorEncoder.get(); 
-    System.out.println (m_elevatorEncoder.get()); 
-}
-
 }
