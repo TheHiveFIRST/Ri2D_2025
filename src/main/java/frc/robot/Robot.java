@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -15,8 +16,10 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+  ElevatorSubsystem ElevatorUp = new ElevatorSubsystem();
+  ElevatorSubsystem ElevatorDown = new ElevatorSubsystem(); 
+  private Joystick m_stick = new Joystick(0);
   private Command m_autonomousCommand;
-
   private RobotContainer m_robotContainer;
 
   /**
@@ -28,6 +31,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+   
   }
 
   /**
@@ -88,7 +92,18 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+
+    m_stick.getRawAxis(5);
+
+    if (m_stick.getRawAxis(5) > 0) {
+      m_elevatorMotor.set(getRawAxis(5)); 
+    }
+
+    if (m_stick.getRawAxis(5) < 0){
+      m_elevatorMotor.set(getRawAxis(5));
+    }
+  }
 
   @Override
   public void testInit() {
@@ -98,5 +113,7 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    myDrive.arcadeDrive(-driveStick.getY(), -driveStick.getX());
+  }
 }
