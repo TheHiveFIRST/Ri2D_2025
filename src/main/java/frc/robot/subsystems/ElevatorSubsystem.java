@@ -32,7 +32,7 @@ public ElevatorSubsystem() {
     this.m_elevatorMotor = new SparkMax (Constants.ElevatorConstants.kElevatorMotorCanId, MotorType.kBrushless); 
     this.m_elevatorFollower = new SparkMax(Constants.ElevatorConstants.kElevatorFollowerCanId,MotorType.kBrushless ); 
 
-    elevatorEncoder = new Encoder(Constants.ElevatorConstants.KEncoderChannelA, Constants.ElevatorConstants.KEncoderChannelB, false);
+    elevatorEncoder = new Encoder(Constants.ElevatorConstants.KEncoderChannelA,Constants.ElevatorConstants.KEncoderChannelB, false);
     elevatorPID = new PIDController(Constants.ElevatorConstants.KP,Constants.ElevatorConstants.KI, Constants.ElevatorConstants.KD);
     
     followerconfig = new SparkMaxConfig();
