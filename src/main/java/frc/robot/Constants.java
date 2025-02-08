@@ -106,9 +106,11 @@ public final class Constants {
     public static final int KI = 0;
     public static final int KD = 0;
     public static final int KEncoderChannelA = 0;
-    public static final int KEncoderChannelB = 1;
-  
-
+    public static final int KEncoderChannelB = 1; 
+  }
+  public static final class PivotConstants {
+    public static final int m_pivotMotorID = 11;
+    public static final int m_intakeMotorID = 12;
   
     
   }
