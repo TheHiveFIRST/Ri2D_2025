@@ -19,9 +19,12 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.List;
 
@@ -34,15 +37,18 @@ import java.util.List;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final ElevatorSubsystem elevator = new ElevatorSubsystem();
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  private final CommandXboxController joystick = new CommandXboxController(1);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
-  public RobotContainer() {
-    // Configure the button bindings
+  
+  public RobotContainer() {    // Configure the button bindings
+   
     configureButtonBindings();
 
     // Configure default commands
@@ -72,6 +78,19 @@ public class RobotContainer {
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive));
+                    // elevator control using pov
+        joystick.leftStick().whileTrue(Commands.run(() -> elevator.runElevatorUp(), elevator));
+        joystick.povDown().whileTrue(Commands.run(() -> elevator.runElevatorDown(), elevator));
+        joystick.povUp().or(joystick.povDown()).onFalse(Commands.run(() -> elevator.stopElevator(), elevator));
+
+        // elevator run to position
+        // y = top, x = middle, a = bottom
+        joystick.y().whileTrue(Commands.run(() -> elevator.runElevatorUp(), elevator));
+        joystick.x().whileTrue(Commands.run(() -> elevator.runElevatorDown(), elevator));
+        joystick.x().or(joystick.y()).whileFalse(Commands.run(()->elevator.stopElevator(),elevator));
+        joystick.a().whileTrue(      Commands.run(()->elevator.zero(),elevator));
+        
+        
   }
 
   /**

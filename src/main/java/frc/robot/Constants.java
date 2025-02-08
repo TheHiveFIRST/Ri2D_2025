@@ -106,7 +106,13 @@ public final class Constants {
     public static final int KI = 0;
     public static final int KD = 0;
     public static final int KEncoderChannelA = 0;
-    public static final int KEncoderChannelB = 1; 
+    public static final int KEncoderChannelB = 1;
+    public static final int BOTTOM_POSITION = 0;
+    public static final int MIDDLE_POSITION = 0;
+    public static final double TOP_POSITION = Units.inchesToMeters(12);
+    public static final double ELEVATOR_SPEED = 1;
+
+
   }
   public static final class PivotConstants {
     public static final int m_pivotMotorID = 11;
