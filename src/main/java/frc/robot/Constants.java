@@ -102,14 +102,14 @@ public final class Constants {
   public static final class ElevatorConstants {   
     public static final int kElevatorMotorCanId = 10;
     public static final int kElevatorFollowerCanId = 9;
-    public static final int KP = 0;
-    public static final int KI = 0;
-    public static final int KD = 0;
+    public static final double KP = 0.005;
+    public static final double KI = 0;
+    public static final double KD = 0;
     public static final int KEncoderChannelA = 0;
     public static final int KEncoderChannelB = 1;
     public static final int BOTTOM_POSITION = 0;
     public static final int MIDDLE_POSITION = 0;
-    public static final double TOP_POSITION = Units.inchesToMeters(12);
+    public static final double TOP_POSITION = 5;
     public static final double ELEVATOR_SPEED = 1;
 
 

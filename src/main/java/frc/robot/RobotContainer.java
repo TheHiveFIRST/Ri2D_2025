@@ -79,15 +79,15 @@ public class RobotContainer {
             () -> m_robotDrive.setX(),
             m_robotDrive));
                     // elevator control using pov
-        joystick.leftStick().whileTrue(Commands.run(() -> elevator.runElevatorUp(), elevator));
-        joystick.povDown().whileTrue(Commands.run(() -> elevator.runElevatorDown(), elevator));
-        joystick.povUp().or(joystick.povDown()).onFalse(Commands.run(() -> elevator.stopElevator(), elevator));
+
 
         // elevator run to position
         // y = top, x = middle, a = bottom
         joystick.y().whileTrue(Commands.run(() -> elevator.runElevatorUp(), elevator));
         joystick.x().whileTrue(Commands.run(() -> elevator.runElevatorDown(), elevator));
         joystick.x().or(joystick.y()).whileFalse(Commands.run(()->elevator.stopElevator(),elevator));
+        joystick.rightBumper().whileTrue(Commands.run(() -> elevator.goToPosition(ElevatorSubsystem.ElevatorPosition.TOP), elevator));
+
         joystick.a().whileTrue(      Commands.run(()->elevator.zero(),elevator));
         
         

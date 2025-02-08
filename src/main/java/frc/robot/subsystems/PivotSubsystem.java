@@ -14,7 +14,7 @@ public class PivotSubsystem extends SubsystemBase{
     public static Object IntakeIn;
     private SparkMax m_pivotMotor;
     private SparkMax m_intakeMotor;
-    private AbsoluteEncoder m_pivotEncoder = m_pivotMotor.getAbsoluteEncoder();
+   // private AbsoluteEncoder m_pivotEncoder = m_pivotMotor.getAbsoluteEncoder();
 
     public PivotSubsystem(){
 

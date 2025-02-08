@@ -8,6 +8,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.ElevatorConstants;
@@ -71,6 +72,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         rightElevator.set(Constants.ElevatorConstants.ELEVATOR_SPEED);
 
         System.out.println(elevatorEncoder.getDistance());
+        SmartDashboard.putNumber("encoder value", elevatorEncoder.get());
     }
 
     public void runElevatorDown() {
@@ -79,6 +81,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         rightElevator.set(-Constants.ElevatorConstants.ELEVATOR_SPEED);
 
         System.out.println(elevatorEncoder.getDistance());
+        SmartDashboard.putNumber("encoder value", elevatorEncoder.get());
     }
 
     public void zero(){
@@ -147,6 +150,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         rightElevator.set(output);
 
         System.out.println(elevatorEncoder.getDistance());
+        SmartDashboard.putNumber("encoder value", elevatorEncoder.get());
     }
 
     private void runElevatorDownPID(double setpoint) {
@@ -159,6 +163,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         rightElevator.set(output);
 
         System.out.println(elevatorEncoder.getDistance());
+        SmartDashboard.putNumber("encoder value", elevatorEncoder.get());
     }
 
     public void stopElevator() {
