@@ -1,17 +1,13 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-import com.revrobotics.AbsoluteEncoder; 
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
@@ -25,6 +21,9 @@ private SparkMaxConfig elevatorconfig;
 
 private PIDController elevatorPID;
 private Encoder elevatorEncoder;
+
+public double demand = 0;
+private static final double kLifterEncoderDistPerPulse = 2.0 * Math.PI /4096;
  
 public ElevatorSubsystem() {
 
@@ -34,6 +33,7 @@ public ElevatorSubsystem() {
 
     elevatorEncoder = new Encoder(Constants.ElevatorConstants.KEncoderChannelA,Constants.ElevatorConstants.KEncoderChannelB, false);
     elevatorPID = new PIDController(Constants.ElevatorConstants.KP,Constants.ElevatorConstants.KI, Constants.ElevatorConstants.KD);
+    elevatorEncoder.setDistancePerPulse(kLifterEncoderDistPerPulse);
     
     followerconfig = new SparkMaxConfig();
     elevatorconfig = new SparkMaxConfig();
@@ -46,13 +46,24 @@ public ElevatorSubsystem() {
 
     m_elevatorMotor.configure(elevatorconfig, null, null);
     m_elevatorFollower.configure(followerconfig, null, null);
+
+
 }
 
 public void ElevatorUp(){
-    this.m_elevatorMotor.set(0.2);
+    demand = Units.inchesToMeters(12);
+    double pidOutput = elevatorPID.calculate(elevatorEncoder.getDistance(),demand);
+
+    this.m_elevatorMotor.set(pidOutput);
+    this.m_elevatorFollower.set(pidOutput);
 }
 
 public void ElevatorDown(){
-    this.m_elevatorMotor.set(-0.2); 
+    demand = Units.inchesToMeters(0);
+    double pidOutput = elevatorPID.calculate(elevatorEncoder.getDistance(),demand);
+
+   
+    this.m_elevatorMotor.set(pidOutput);
+    this.m_elevatorFollower.set(pidOutput); 
 }
 }
