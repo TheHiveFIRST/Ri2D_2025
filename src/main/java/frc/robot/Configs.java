@@ -9,6 +9,7 @@ import frc.robot.Constants.ModuleConstants;
 public final class Configs {
     public static final class MAXSwerveModule {
         public static final SparkMaxConfig drivingConfig = new SparkMaxConfig();
+        public static final SparkMaxConfig drivingReverseConfig = new SparkMaxConfig();
         public static final SparkMaxConfig turningConfig = new SparkMaxConfig();
 
         static {
@@ -21,6 +22,8 @@ public final class Configs {
             drivingConfig
                     .idleMode(IdleMode.kBrake)
                     .smartCurrentLimit(50);
+          
+                    
             drivingConfig.encoder
                     .positionConversionFactor(drivingFactor) // meters
                     .velocityConversionFactor(drivingFactor / 60.0); // meters per second
@@ -30,6 +33,7 @@ public final class Configs {
                     .pid(0.04, 0, 0)
                     .velocityFF(drivingVelocityFeedForward)
                     .outputRange(-1, 1);
+                    
 
             turningConfig
                     .idleMode(IdleMode.kBrake)

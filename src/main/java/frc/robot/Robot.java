@@ -5,9 +5,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.ElevatorSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -16,11 +20,14 @@ import edu.wpi.first.wpilibj.Joystick;
  * project.
  */
 public class Robot extends TimedRobot {
-  ElevatorSubsystem ElevatorUp = new ElevatorSubsystem();
-  ElevatorSubsystem ElevatorDown = new ElevatorSubsystem(); 
+  //ElevatorSubsystem ElevatorUp = new ElevatorSubsystem();
+  //ElevatorSubsystem ElevatorDown = new ElevatorSubsystem(); 
   private Joystick m_stick = new Joystick(0);
   private Command m_autonomousCommand;
+  
   private RobotContainer m_robotContainer;
+  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -47,6 +54,7 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
+
     CommandScheduler.getInstance().run();
   }
 
@@ -93,15 +101,11 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-
-    m_stick.getRawAxis(5);
-
-    if (m_stick.getRawAxis(5) > 0) {
-      m_elevatorMotor.set(getRawAxis(5)); 
+    if(m_driverController.getRawButtonPressed(1)) {
+      
     }
+    else if (m_driverController.getRawButtonReleased(1)){
 
-    if (m_stick.getRawAxis(5) < 0){
-      m_elevatorMotor.set(getRawAxis(5));
     }
   }
 
@@ -114,6 +118,5 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    myDrive.arcadeDrive(-driveStick.getY(), -driveStick.getX());
   }
 }
