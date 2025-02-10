@@ -8,10 +8,11 @@ import edu.wpi.first.wpilibj.TimedRobot;
 // import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.subsystems.PivotSubsystem;
+import frc.robot.subsystems.StingerSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 
 
@@ -24,12 +25,13 @@ import edu.wpi.first.wpilibj.Joystick;
 public class Robot extends TimedRobot {
   //ElevatorSubsystem ElevatorUp = new ElevatorSubsystem();
   //ElevatorSubsystem ElevatorDown = new ElevatorSubsystem(); 
-  private Joystick m_stick = new Joystick(0);
   private Command m_autonomousCommand;
   
   private RobotContainer m_robotContainer;
   Joystick m_driverController = new Joystick(OIConstants.kDriverControllerPort);
-  PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
+  Joystick m_operatorController = new Joystick(OIConstants.kOperatorControllerPort);
+  StingerSubsystem m_StingerSubsystem = new StingerSubsystem();
+  ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
 
 
 
@@ -100,20 +102,27 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    m_ElevatorSubsystem.resetEncoder();
+    //this is only for testing, get rid of this once pid is tuned
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
     if(m_driverController.getRawButtonPressed(1)) {
-      m_pivotSubsystem.
-      
-      
+      m_StingerSubsystem.setIntakePower(1);
     }
     else if (m_driverController.getRawButtonReleased(1)){
 
-
-
+    }
+    if (m_operatorController.getPOV() == 0) {
+      m_ElevatorSubsystem.setElevatorPower(.8);
+    }
+    else if (m_operatorController.getPOV() == 180) {
+      m_ElevatorSubsystem.setElevatorPower(-0.8);
+    }
+    else if (m_operatorController.getPOV() == -1) {
+      m_ElevatorSubsystem.setElevatorPower(0);
     }
   }
 
