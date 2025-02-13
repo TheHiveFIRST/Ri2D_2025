@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
   Joystick m_operatorController = new Joystick(OIConstants.kOperatorControllerPort);
   StingerSubsystem m_StingerSubsystem = new StingerSubsystem();
   ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
-  double setPos = 0;
+  double setPos;
 
 
 
@@ -111,10 +111,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
       if (m_operatorController.getRawButtonPressed(1)){
-        setPos = 3;
+        setPos = 0.15;
       }
       if (m_operatorController.getRawButtonPressed(2)){
-        setPos = 10;
+        setPos = 33.3;
       }
       m_ElevatorSubsystem.elevatorPIDControl(setPos);
       m_ElevatorSubsystem.elevatorPIDSetPower();
@@ -123,21 +123,7 @@ public class Robot extends TimedRobot {
       }
     
     
-   //if (m_driverController.getRawButtonReleased(1)){
-     // m_StingerSubsystem.setIntakePower(0);
-  //  }
-  //   if (m_operatorController.getPOV() == 0) {
-  //      m_ElevatorSubsystem.setElevatorPower(0.8);
-  //   }
-  //   else if (m_operatorController.getPOV() == 180) {
-  //     m_ElevatorSubsystem.setElevatorPower(-0.8);
-  //   }
-  //   else if (m_operatorController.getPOV()== -1) {
-  //     m_ElevatorSubsystem.setElevatorPower(0);
-  // }
-  // if (m_operatorController.getRawButtonPressed(2)){
-   //  m_ElevatorSubsystem.resetEncoder();
- // }
+
    
   }
   

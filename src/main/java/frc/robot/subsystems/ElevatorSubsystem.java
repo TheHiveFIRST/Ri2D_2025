@@ -63,4 +63,7 @@ public void elevatorPIDSetPower(){
 public void resetEncoder(){
     m_elevatorEncoder.reset();
 }
+public void encoderGetValue(){
+    System.out.println("Encoder Position" + m_elevatorEncoder.getDistance());
+}
 }
