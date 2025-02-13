@@ -111,15 +111,16 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
       if (m_operatorController.getRawButtonPressed(1)){
-        setPos = 4;
+        setPos = 3;
       }
       if (m_operatorController.getRawButtonPressed(2)){
-        setPos = 7;
+        setPos = 10;
       }
       m_ElevatorSubsystem.elevatorPIDControl(setPos);
       m_ElevatorSubsystem.elevatorPIDSetPower();
-        
-      
+      if (m_operatorController.getRawButtonPressed(3)){
+        m_ElevatorSubsystem.resetEncoder();
+      }
     
     
    //if (m_driverController.getRawButtonReleased(1)){
