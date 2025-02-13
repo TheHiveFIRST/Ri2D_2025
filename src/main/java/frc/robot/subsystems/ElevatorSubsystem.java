@@ -19,6 +19,7 @@ private PIDController m_elevatorPID;
 private Encoder m_elevatorEncoder;
 private SparkMaxConfig leftConfig;
 private SparkMaxConfig rightConfig;
+public double output = 0;
 //constructors
     public ElevatorSubsystem(){
         m_elevatorMotor = new SparkMax(Constants.ElevatorConstants.kElevatorMotorCanId, MotorType.kBrushless);
@@ -49,12 +50,15 @@ public void setElevatorPower(double elevatorPower){
 
 }
 public void elevatorPIDControl(double setPosition){
-    double output = m_elevatorPID.calculate(m_elevatorEncoder.getDistance(), setPosition);
+    output = m_elevatorPID.calculate(m_elevatorEncoder.getDistance(), setPosition);
     System.out.println("Encoder Position" + m_elevatorEncoder.getDistance());
     System.out.println("Set Position" + setPosition);
+
+
+}
+public void elevatorPIDSetPower(){
     m_elevatorMotor.set(output);
     m_elevatorFollower.set(output);
-
 }
 public void resetEncoder(){
     m_elevatorEncoder.reset();

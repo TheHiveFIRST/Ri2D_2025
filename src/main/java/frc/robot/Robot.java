@@ -32,6 +32,7 @@ public class Robot extends TimedRobot {
   Joystick m_operatorController = new Joystick(OIConstants.kOperatorControllerPort);
   StingerSubsystem m_StingerSubsystem = new StingerSubsystem();
   ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
+  double setPos = 0;
 
 
 
@@ -102,29 +103,43 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    m_ElevatorSubsystem.resetEncoder();
+   // m_ElevatorSubsystem.resetEncoder();
     //this is only for testing, get rid of this once pid is tuned
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    if(m_driverController.getRawButtonPressed(1)) {
-      m_StingerSubsystem.setIntakePower(1);
-    }
-    else if (m_driverController.getRawButtonReleased(1)){
-
-    }
-    if (m_operatorController.getPOV() == 0) {
-      m_ElevatorSubsystem.setElevatorPower(.8);
-    }
-    else if (m_operatorController.getPOV() == 180) {
-      m_ElevatorSubsystem.setElevatorPower(-0.8);
-    }
-    else if (m_operatorController.getPOV() == -1) {
-      m_ElevatorSubsystem.setElevatorPower(0);
-    }
+      if (m_operatorController.getRawButtonPressed(1)){
+        setPos = 4;
+      }
+      if (m_operatorController.getRawButtonPressed(2)){
+        setPos = 7;
+      }
+      m_ElevatorSubsystem.elevatorPIDControl(setPos);
+      m_ElevatorSubsystem.elevatorPIDSetPower();
+        
+      
+    
+    
+   //if (m_driverController.getRawButtonReleased(1)){
+     // m_StingerSubsystem.setIntakePower(0);
+  //  }
+  //   if (m_operatorController.getPOV() == 0) {
+  //      m_ElevatorSubsystem.setElevatorPower(0.8);
+  //   }
+  //   else if (m_operatorController.getPOV() == 180) {
+  //     m_ElevatorSubsystem.setElevatorPower(-0.8);
+  //   }
+  //   else if (m_operatorController.getPOV()== -1) {
+  //     m_ElevatorSubsystem.setElevatorPower(0);
+  // }
+  // if (m_operatorController.getRawButtonPressed(2)){
+   //  m_ElevatorSubsystem.resetEncoder();
+ // }
+   
   }
+  
 
   @Override
   public void testInit() {
