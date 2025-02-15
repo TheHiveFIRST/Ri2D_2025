@@ -112,14 +112,14 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
       if (m_operatorController.getRawButtonPressed(1)){
-        setPos = 0.15;
+        setPos = 0.5;
       }
       else if (m_operatorController.getRawButtonPressed(2)){
-        setPos = 10.6;
+        setPos = 12.5;
         setAng = 0.5;
       }
       else if (m_operatorController.getRawButtonPressed(4)){
-        setPos = 20.5;
+        setPos = 22;
         setAng = 0.5;
       }
       else if (m_operatorController.getRawButtonPressed(3)){
@@ -131,12 +131,12 @@ public class Robot extends TimedRobot {
       
       
       
-      if (m_operatorController.getRawButtonPressed(5)){
+      if (m_driverController.getRawButtonPressed(5)){
         m_StingerSubsystem.setIntakePower(0.3);
       }
-      else if (m_operatorController.getRawButtonPressed(6)){
+      else if (m_driverController.getRawButtonPressed(6)){
         m_StingerSubsystem.setIntakePower(-0.3);
-      }else if ( m_operatorController.getRawButtonReleased(6) || m_operatorController.getRawButtonReleased(5)) {
+      }else if ( m_driverController.getRawButtonReleased(6) || m_driverController.getRawButtonReleased(5)) {
         m_StingerSubsystem.setIntakePower(0);
       }
       m_ElevatorSubsystem.elevatorPIDControl(setPos);
