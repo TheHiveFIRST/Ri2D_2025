@@ -21,15 +21,21 @@ public class StingerSubsystem extends SubsystemBase {
     // Variables
     private SparkMax m_intakeMotor; 
     private SparkMax m_pivotMotor;
-    private AbsoluteEncoder m_absencoder;
+    private SparkMaxConfig pivotConfig;
+    private AbsoluteEncoder m_absoluteEncoder;
     private PIDController m_pivotPID;
-    public double output = 0;
+    public double pivotOutput = 0;
 
     // Constructors
     public StingerSubsystem() {
         m_intakeMotor = new SparkMax(Constants.PivotConstants.kPintakeMotorId, MotorType.kBrushless);
         m_pivotMotor = new SparkMax(Constants.PivotConstants.kPivotMotorId, MotorType.kBrushless);
-        m_absencoder =  m_pivotMotor.getAbsoluteEncoder();
+        pivotConfig = new SparkMaxConfig();
+        pivotConfig.idleMode(IdleMode.kBrake);
+        pivotConfig.inverted(true);
+        m_pivotMotor.configure(pivotConfig, null, null);
+        
+        m_absoluteEncoder =  m_pivotMotor.getAbsoluteEncoder();
         m_pivotPID = new PIDController(Constants.PivotConstants.pivotKP,Constants.PivotConstants.pivotKI, Constants.PivotConstants.pivotKD);
     }
 
@@ -42,17 +48,18 @@ public class StingerSubsystem extends SubsystemBase {
         m_pivotMotor.set(pivotPower);
     }
 
-    public void goToHeheHaha(Double hahahhehe) {
-         output = m_pivotPID.calculate(m_absencoder.getPosition(), hahahhehe);
-       
+    public void PivotPIDControl(double targetAngle) {
+         pivotOutput = m_pivotPID.calculate(m_absoluteEncoder.getPosition(), targetAngle);
+        System.out.println("pivot encoder value"+m_absoluteEncoder.getPosition());
+        System.out.println("pivot set position"+ targetAngle);
     }
-    public void setPowerToPID(){
-        m_pivotMotor.set(output);  
+    public void PivotPIDSetPower(){
+        m_pivotMotor.set(pivotOutput);  
         
      }
 
-    public void getEncoderPosition(){
-        System.out.println("Encoder position for claw/pivot is" + m_absencoder.getPosition());
-    }
+  //  public void getEncoderPosition(){
+  //      System.out.println("Encoder position for claw/pivot is" + m_absoluteEncoder.getPosition());
+ //   }
 
 }
