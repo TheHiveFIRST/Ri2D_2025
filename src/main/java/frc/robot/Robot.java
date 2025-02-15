@@ -116,19 +116,22 @@ public class Robot extends TimedRobot {
       if (m_operatorController.getRawButtonPressed(2)){
         setPos = 10.6;
       }
-      if (m_operatorController.getRawButtonPressed(3)){
+      if (m_operatorController.getRawButtonPressed(4)){
         setPos = 20.5;
       }
-      if (m_operatorController.getRawButtonPressed(4)){
+      if (m_operatorController.getRawButtonPressed(3)){
         setPos = 33.3;
+      }
+      if (m_operatorController.getRawButtonPressed(5)){
+        m_StingerSubsystem.setIntakePower(.5);
+      }
+      else if (m_operatorController.getRawButtonPressed(6)){
+        m_StingerSubsystem.setIntakePower(-0.5);
+      }else if (m_operatorController.getRawButtonReleased(5) || m_operatorController.getRawButtonReleased(6)) {
+        m_StingerSubsystem.setIntakePower(0);
       }
       m_ElevatorSubsystem.elevatorPIDControl(setPos);
       m_ElevatorSubsystem.elevatorPIDSetPower();
-
-
-    
-    
-
    
   }
   

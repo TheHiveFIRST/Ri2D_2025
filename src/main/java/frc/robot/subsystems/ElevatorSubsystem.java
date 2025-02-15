@@ -7,6 +7,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -20,6 +21,7 @@ private Encoder m_elevatorEncoder;
 private SparkMaxConfig leftConfig;
 private SparkMaxConfig rightConfig;
 public double output = 0;
+SlewRateLimiter lessFast = new SlewRateLimiter(1);
 //constructors
     public ElevatorSubsystem(){
         m_elevatorMotor = new SparkMax(Constants.ElevatorConstants.kElevatorMotorCanId, MotorType.kBrushless);
@@ -40,7 +42,6 @@ public double output = 0;
 
         m_elevatorMotor.configure(leftConfig, null, null);
         m_elevatorFollower.configure(rightConfig, null, null);
-
     }
 //methods
 public void setElevatorPower(double elevatorPower){
@@ -50,7 +51,7 @@ public void setElevatorPower(double elevatorPower){
 
 }
 public void elevatorPIDControl(double setPosition){
-    output = m_elevatorPID.calculate(m_elevatorEncoder.getDistance(), setPosition);
+    output = m_elevatorPID.calculate(m_elevatorEncoder.getDistance(), setPosition) ;
     System.out.println("Encoder Position" + m_elevatorEncoder.getDistance());
     System.out.println("Set Position" + setPosition);
 
