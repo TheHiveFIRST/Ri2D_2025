@@ -33,6 +33,7 @@ public class Robot extends TimedRobot {
   StingerSubsystem m_StingerSubsystem = new StingerSubsystem();
   ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
   double setPos;
+  double intakePos;
 
 
 
@@ -121,6 +122,7 @@ public class Robot extends TimedRobot {
       }
       if (m_operatorController.getRawButtonPressed(3)){
         setPos = 33.3;
+        // intakePos = whatever value this is;
       }
       if (m_operatorController.getRawButtonPressed(5)){
         m_StingerSubsystem.setIntakePower(.5);
@@ -132,6 +134,12 @@ public class Robot extends TimedRobot {
       }
       m_ElevatorSubsystem.elevatorPIDControl(setPos);
       m_ElevatorSubsystem.elevatorPIDSetPower();
+
+      // m_StingerSubsystem.goToHeheHaha(intakePos);
+     m_StingerSubsystem.getEncoderPosition();
+      
+
+    
    
   }
   

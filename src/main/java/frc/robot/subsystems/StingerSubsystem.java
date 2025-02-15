@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.PivotConstants;
+
 //import frc.robot.subsystems.ElevatorSubsystem.ElevatorPosition;
 
 public class StingerSubsystem extends SubsystemBase {
@@ -22,6 +23,7 @@ public class StingerSubsystem extends SubsystemBase {
     private SparkMax m_pivotMotor;
     private AbsoluteEncoder m_absencoder;
     private PIDController m_pivotPID;
+    public double output = 0;
 
     // Constructors
     public StingerSubsystem() {
@@ -40,8 +42,17 @@ public class StingerSubsystem extends SubsystemBase {
         m_pivotMotor.set(pivotPower);
     }
 
-    public void goToHeheHaha(int hahahhehe) {
-        double output = m_pivotPID.calculate(m_absencoder.getPosition(), hahahhehe);
-        m_pivotMotor.set(output);
+    public void goToHeheHaha(Double hahahhehe) {
+         output = m_pivotPID.calculate(m_absencoder.getPosition(), hahahhehe);
+       
     }
+    public void setPowerToPID(){
+        m_pivotMotor.set(output);  
+        
+     }
+
+    public void getEncoderPosition(){
+        System.out.println("Encoder position for claw/pivot is" + m_absencoder.getPosition());
+    }
+
 }
