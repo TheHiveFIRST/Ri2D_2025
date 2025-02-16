@@ -8,12 +8,15 @@ import edu.wpi.first.wpilibj.TimedRobot;
 // import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.StingerSubsystem;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
+import  com.pathplanner.lib.commands.PathPlannerAuto;
 
 
 /**
@@ -34,6 +37,9 @@ public class Robot extends TimedRobot {
   ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
   double setPos;
   double setAng = 0.32; 
+  DigitalInput limitSwitch = new DigitalInput(2);
+
+
 
 
 
@@ -95,6 +101,14 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {}
 
+  // public Command getAutonomousCommand() {
+  //   // This method loads the auto when it is called, however, it is recommended
+  //   // to first load your paths/autos when code starts, then return the
+  //   // pre-loaded auto/path
+   
+  //  return new PathPlannerAuto("Ishana Path.path");
+  //  }
+  
   @Override
   public void teleopInit() {
     // This makes sure that the autonomous stops running when
@@ -112,18 +126,21 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
       if (m_operatorController.getRawButtonPressed(1)){
-        setPos = 0.5;
+        setPos = 0.1;
       }
       else if (m_operatorController.getRawButtonPressed(2)){
         setPos = 12.5;
+        new WaitCommand(.5);
         setAng = 0.5;
       }
       else if (m_operatorController.getRawButtonPressed(4)){
         setPos = 22;
+        new WaitCommand(0.5);
         setAng = 0.5;
       }
       else if (m_operatorController.getRawButtonPressed(3)){
         setPos = 33.3;
+        new WaitCommand(0.5);
       }
       else if (m_operatorController.getRawButtonReleased(1) || m_operatorController.getRawButtonReleased(2) || m_operatorController.getRawButtonReleased(3) || m_operatorController.getRawButtonReleased(4)){
         setAng = 0.32;
@@ -143,6 +160,11 @@ public class Robot extends TimedRobot {
       m_ElevatorSubsystem.elevatorPIDSetPower();
       m_StingerSubsystem.PivotPIDControl(setAng);
       m_StingerSubsystem.PivotPIDSetPower();
+     
+      if (limitSwitch.get()){
+        m_ElevatorSubsystem.resetEncoder();
+      System.out.println("imagine encoder reset here");
+      }
     
   }
   
@@ -157,4 +179,4 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
   }
-}
+  }
