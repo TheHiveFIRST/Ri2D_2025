@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 // import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.OIConstants;
@@ -15,6 +16,7 @@ import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.StingerSubsystem;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
+import  com.pathplanner.lib.commands.PathPlannerAuto;
 
 
 /**
@@ -34,9 +36,16 @@ public class Robot extends TimedRobot {
   StingerSubsystem m_StingerSubsystem = new StingerSubsystem();
   ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
   double setPos;
+<<<<<<< HEAD
   double intakePos;
   DigitalInput limitSwitch = new DigitalInput(2); 
   double setAngle; 
+=======
+  double setAng = 0.32; 
+  DigitalInput limitSwitch = new DigitalInput(2);
+
+
+>>>>>>> e76eb496ee54ac4b9fe4a3a9f424cab6bc00ae09
 
 
 
@@ -99,6 +108,14 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {}
 
+  // public Command getAutonomousCommand() {
+  //   // This method loads the auto when it is called, however, it is recommended
+  //   // to first load your paths/autos when code starts, then return the
+  //   // pre-loaded auto/path
+   
+  //  return new PathPlannerAuto("Ishana Path.path");
+  //  }
+  
   @Override
   public void teleopInit() {
     // This makes sure that the autonomous stops running when
@@ -116,6 +133,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
       if (m_operatorController.getRawButtonPressed(1)){
+<<<<<<< HEAD
         setPos = 0.15;
       }
       if (m_operatorController.getRawButtonPressed(2)){
@@ -123,10 +141,27 @@ public class Robot extends TimedRobot {
       }
       if (m_operatorController.getRawButtonPressed(4)){
         setPos = 20.5;
+=======
+        setPos = 0.1;
+      }
+      else if (m_operatorController.getRawButtonPressed(2)){
+        setPos = 12.5;
+        new WaitCommand(.5);
+        setAng = 0.5;
+      }
+      else if (m_operatorController.getRawButtonPressed(4)){
+        setPos = 22;
+        new WaitCommand(0.5);
+        setAng = 0.5;
+>>>>>>> e76eb496ee54ac4b9fe4a3a9f424cab6bc00ae09
       }
       if (m_operatorController.getRawButtonPressed(3)){
         setPos = 33.3;
+<<<<<<< HEAD
         // intakePos = whatever value this is;
+=======
+        new WaitCommand(0.5);
+>>>>>>> e76eb496ee54ac4b9fe4a3a9f424cab6bc00ae09
       }
       if (m_operatorController.getRawButtonPressed(5)){
         setAngle = 0.1; 
@@ -144,6 +179,14 @@ public class Robot extends TimedRobot {
       m_StingerSubsystem.PivotPIDControl(setAngle);
       m_StingerSubsystem.PivotPIDSetPower();
      
+<<<<<<< HEAD
+=======
+      if (limitSwitch.get()){
+        m_ElevatorSubsystem.resetEncoder();
+      System.out.println("imagine encoder reset here");
+      }
+    
+>>>>>>> e76eb496ee54ac4b9fe4a3a9f424cab6bc00ae09
   }
   
 
@@ -157,4 +200,8 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
   }
+<<<<<<< HEAD
 }
+=======
+  }
+>>>>>>> e76eb496ee54ac4b9fe4a3a9f424cab6bc00ae09
