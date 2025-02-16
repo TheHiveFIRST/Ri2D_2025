@@ -121,13 +121,9 @@ public final class Constants {
     public static final double pivotKP = 1.6; 
     public static final double pivotKI = 0;
     public static final double pivotKD = 0.05;
-    public static final int pivotKEncoderChannel = 3;
-    public static final int pivotKEncoderFullRange = 4;
-    public static final int pivotKEncoderexpectedZero = 2;
-    public static final int pivotBOTTOM_POSITION = 0;
-    public static final int pivotMIDDLE_POSITION = 0;
-    public static final double pivotTOP_POSITION = 5;
-    public static final double PIVOT_SPEED = 0.1;
+    public static final double pivotSOURCE_POSITION = 0.32;
+    public static final double pivotL2L3_POSITION = 0.5;
+    public static final double pivotL4_POSITION = 0.7;
     
   }
 }

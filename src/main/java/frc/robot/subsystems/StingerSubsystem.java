@@ -58,8 +58,4 @@ public class StingerSubsystem extends SubsystemBase {
         
      }
 
-  //  public void getEncoderPosition(){
-  //      System.out.println("Encoder position for claw/pivot is" + m_absoluteEncoder.getPosition());
- //   }
-
 }

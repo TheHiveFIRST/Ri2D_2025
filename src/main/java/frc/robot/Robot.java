@@ -13,6 +13,7 @@ import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.StingerSubsystem;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 
 
@@ -33,7 +34,9 @@ public class Robot extends TimedRobot {
   StingerSubsystem m_StingerSubsystem = new StingerSubsystem();
   ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
   double setPos;
-  double setAng = 0.32; 
+  double intakePos;
+  DigitalInput limitSwitch = new DigitalInput(2); 
+  double setAngle; 
 
 
 
@@ -64,6 +67,7 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
 
     CommandScheduler.getInstance().run();
+    System.out.println("limit switch state: " + limitSwitch.get());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -112,38 +116,34 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
       if (m_operatorController.getRawButtonPressed(1)){
-        setPos = 0.5;
+        setPos = 0.15;
       }
-      else if (m_operatorController.getRawButtonPressed(2)){
-        setPos = 12.5;
-        setAng = 0.5;
+      if (m_operatorController.getRawButtonPressed(2)){
+        setPos = 10.6;
       }
-      else if (m_operatorController.getRawButtonPressed(4)){
-        setPos = 22;
-        setAng = 0.5;
+      if (m_operatorController.getRawButtonPressed(4)){
+        setPos = 20.5;
       }
-      else if (m_operatorController.getRawButtonPressed(3)){
+      if (m_operatorController.getRawButtonPressed(3)){
         setPos = 33.3;
+        // intakePos = whatever value this is;
       }
-      else if (m_operatorController.getRawButtonReleased(1) || m_operatorController.getRawButtonReleased(2) || m_operatorController.getRawButtonReleased(3) || m_operatorController.getRawButtonReleased(4)){
-        setAng = 0.32;
+      if (m_operatorController.getRawButtonPressed(5)){
+        setAngle = 0.1; 
       }
-      
-      
-      
-      if (m_driverController.getRawButtonPressed(5)){
-        m_StingerSubsystem.setIntakePower(0.3);
+      else if (m_operatorController.getRawButtonPressed(6)){
+        m_StingerSubsystem.setIntakePower(-0.5);
       }
-      else if (m_driverController.getRawButtonPressed(6)){
-        m_StingerSubsystem.setIntakePower(-0.3);
-      }else if ( m_driverController.getRawButtonReleased(6) || m_driverController.getRawButtonReleased(5)) {
+      else if (m_operatorController.getRawButtonReleased(5) || m_operatorController.getRawButtonReleased(6)) {
         m_StingerSubsystem.setIntakePower(0);
       }
+      
+    
       m_ElevatorSubsystem.elevatorPIDControl(setPos);
       m_ElevatorSubsystem.elevatorPIDSetPower();
-      m_StingerSubsystem.PivotPIDControl(setAng);
+      m_StingerSubsystem.PivotPIDControl(setAngle);
       m_StingerSubsystem.PivotPIDSetPower();
-    
+     
   }
   
 

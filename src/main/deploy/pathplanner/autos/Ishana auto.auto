@@ -9,6 +9,18 @@
           "data": {
             "pathName": "Ishana Path"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Ishana Path 2"
+          }
         }
       ]
     }
