@@ -36,16 +36,10 @@ public class Robot extends TimedRobot {
   StingerSubsystem m_StingerSubsystem = new StingerSubsystem();
   ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
   double setPos;
-<<<<<<< HEAD
-  double intakePos;
-  DigitalInput limitSwitch = new DigitalInput(2); 
-  double setAngle; 
-=======
   double setAng = 0.32; 
   DigitalInput limitSwitch = new DigitalInput(2);
 
 
->>>>>>> e76eb496ee54ac4b9fe4a3a9f424cab6bc00ae09
 
 
 
@@ -133,15 +127,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
       if (m_operatorController.getRawButtonPressed(1)){
-<<<<<<< HEAD
-        setPos = 0.15;
-      }
-      if (m_operatorController.getRawButtonPressed(2)){
-        setPos = 10.6;
-      }
-      if (m_operatorController.getRawButtonPressed(4)){
-        setPos = 20.5;
-=======
         setPos = 0.1;
       }
       else if (m_operatorController.getRawButtonPressed(2)){
@@ -153,40 +138,44 @@ public class Robot extends TimedRobot {
         setPos = 22;
         new WaitCommand(0.5);
         setAng = 0.5;
->>>>>>> e76eb496ee54ac4b9fe4a3a9f424cab6bc00ae09
       }
       if (m_operatorController.getRawButtonPressed(3)){
         setPos = 33.3;
-<<<<<<< HEAD
-        // intakePos = whatever value this is;
-=======
         new WaitCommand(0.5);
->>>>>>> e76eb496ee54ac4b9fe4a3a9f424cab6bc00ae09
       }
-      if (m_operatorController.getRawButtonPressed(5)){
-        setAngle = 0.1; 
-      }
-      else if (m_operatorController.getRawButtonPressed(6)){
-        m_StingerSubsystem.setIntakePower(-0.5);
-      }
-      else if (m_operatorController.getRawButtonReleased(5) || m_operatorController.getRawButtonReleased(6)) {
-        m_StingerSubsystem.setIntakePower(0);
+      else if (m_operatorController.getRawButtonReleased(1) || m_operatorController.getRawButtonReleased(2) || m_operatorController.getRawButtonReleased(3) || m_operatorController.getRawButtonReleased(4)){
+        setAng = 0.32; 
       }
       
+      
+      if (m_driverController.getRawButtonPressed(5)){
+        m_StingerSubsystem.setIntakePower(0.3);
+      }
+      else if (m_driverController.getRawButtonPressed(6)){
+        m_StingerSubsystem.setIntakePower(-0.3);
+      }
+      else if (m_driverController.getRawButtonReleased(5) || m_driverController.getRawButtonReleased(6)) {
+        m_StingerSubsystem.setIntakePower(0);
+      }
+
+      //if(m_operatorController.getRawButtonPressed(5)){
+     //   setPos = 0.3; // TEST ALGAE 1 ELevator value 
+        //setAng = 0.3; //TEST AlGAE 1,2 Pivot value 
+      //}
+      // else if (m_operatorController.getRawButtonPressed(6)){
+      //   setPos = 0.4; //TEST AlGAE 2 Elevator value 
+      //   setAng = 0.3; //TEST Algae 2 
+      // }
     
       m_ElevatorSubsystem.elevatorPIDControl(setPos);
       m_ElevatorSubsystem.elevatorPIDSetPower();
-      m_StingerSubsystem.PivotPIDControl(setAngle);
+      m_StingerSubsystem.PivotPIDControl(setAng);
       m_StingerSubsystem.PivotPIDSetPower();
      
-<<<<<<< HEAD
-=======
       if (limitSwitch.get()){
         m_ElevatorSubsystem.resetEncoder();
-      System.out.println("imagine encoder reset here");
+        System.out.println("imagine encoder reset here");
       }
-    
->>>>>>> e76eb496ee54ac4b9fe4a3a9f424cab6bc00ae09
   }
   
 
@@ -200,8 +189,4 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
   }
-<<<<<<< HEAD
-}
-=======
   }
->>>>>>> e76eb496ee54ac4b9fe4a3a9f424cab6bc00ae09
