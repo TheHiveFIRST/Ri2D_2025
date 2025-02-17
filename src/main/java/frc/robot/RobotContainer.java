@@ -41,8 +41,6 @@ public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
 
-  private StingerSubsystem shootSubsystem; 
-
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
 
@@ -55,9 +53,6 @@ public class RobotContainer {
   
   
   public RobotContainer() {    // Configure the button bindings
-
-    shootSubsystem = new StingerSubsystem(); 
-   
 
     configureButtonBindings();
     

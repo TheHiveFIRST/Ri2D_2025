@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 // import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -39,10 +40,6 @@ public class Robot extends TimedRobot {
   double setAng = 0.32; 
   DigitalInput limitSwitch = new DigitalInput(2);
 
-
-
-
-
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -70,7 +67,7 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
 
     CommandScheduler.getInstance().run();
-    System.out.println("limit switch state: " + limitSwitch.get());
+    // System.out.println("limit switch state: " + limitSwitch.get());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -98,9 +95,23 @@ public class Robot extends TimedRobot {
     }
   }
 
+  public PathPlannerAuto runPath(){
+    return new PathPlannerAuto("Ishana Path");
+  }
+
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+
+    // if (Timer.getTimestamp()> 5){
+
+    //   m_StingerSubsystem.setIntakePower(0.2);
+
+      
+
+    // }
+    
+  }
 
   // public Command getAutonomousCommand() {
   //   // This method loads the auto when it is called, however, it is recommended
@@ -128,6 +139,8 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
       if (m_operatorController.getRawButtonPressed(1)){
         setPos = 0.1;
+        new WaitCommand(.5);
+        setAng = 0.5;
       }
       else if (m_operatorController.getRawButtonPressed(2)){
         setPos = 12.5;
@@ -142,21 +155,26 @@ public class Robot extends TimedRobot {
       if (m_operatorController.getRawButtonPressed(3)){
         setPos = 33.3;
         new WaitCommand(0.5);
+        setAng = 0.42;
       }
       else if (m_operatorController.getRawButtonReleased(1) || m_operatorController.getRawButtonReleased(2) || m_operatorController.getRawButtonReleased(3) || m_operatorController.getRawButtonReleased(4)){
         setAng = 0.32; 
       }
       
       
-      if (m_driverController.getRawButtonPressed(5)){
+      if (m_operatorController.getRawButtonPressed(5)){
         m_StingerSubsystem.setIntakePower(0.3);
       }
-      else if (m_driverController.getRawButtonPressed(6)){
+      else if (m_operatorController.getRawButtonPressed(6)){
         m_StingerSubsystem.setIntakePower(-0.3);
       }
-      else if (m_driverController.getRawButtonReleased(5) || m_driverController.getRawButtonReleased(6)) {
+      else if (m_operatorController.getRawButtonReleased(5) || m_driverController.getRawButtonReleased(6)) {
         m_StingerSubsystem.setIntakePower(0);
       }
+
+
+      
+
 
       //if(m_operatorController.getRawButtonPressed(5)){
      //   setPos = 0.3; // TEST ALGAE 1 ELevator value 
@@ -174,7 +192,7 @@ public class Robot extends TimedRobot {
      
       if (limitSwitch.get()){
         m_ElevatorSubsystem.resetEncoder();
-        System.out.println("imagine encoder reset here");
+        // System.out.println("imagine encoder reset here");
       }
   }
   

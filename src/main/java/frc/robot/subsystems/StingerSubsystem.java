@@ -19,7 +19,7 @@ import frc.robot.Constants.PivotConstants;
 
 public class StingerSubsystem extends SubsystemBase {
     // Variables
-    private SparkMax m_intakeMotor; 
+    public SparkMax m_intakeMotor; 
     private SparkMax m_pivotMotor;
     private SparkMaxConfig pivotConfig;
     private AbsoluteEncoder m_absoluteEncoder;

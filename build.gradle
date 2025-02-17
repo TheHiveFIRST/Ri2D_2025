@@ -150,11 +150,11 @@ dependencies {
     implementation wpi.java.deps.wpilib()
     implementation wpi.java.vendor.java()
 
-    // ✅ Ensure Shuffleboard is correctly added
-    implementation 'edu.wpi.first.shuffleboard:shuffleboard:2025.2.1' 
+    // // ✅ Ensure Shuffleboard is correctly added
+    // implementation 'edu.wpi.first.shuffleboard:shuffleboard:2025.2.1' 
 
-    // ✅ Add simulation support
-    implementation 'edu.wpi.first.wpilibj.simulation:wpilib-sim:2025.2.1'
+    // // ✅ Add simulation support
+    // implementation 'edu.wpi.first.wpilibj.simulation:wpilib-sim:2025.2.1'
 
     roborioDebug wpi.java.deps.wpilibJniDebug(wpi.platforms.roborio)
     roborioDebug wpi.java.vendor.jniDebug(wpi.platforms.roborio)
