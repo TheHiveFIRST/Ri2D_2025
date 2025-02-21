@@ -14,7 +14,9 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.StingerSubsystem;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import  com.pathplanner.lib.commands.PathPlannerAuto;
@@ -36,9 +38,12 @@ public class Robot extends TimedRobot {
   Joystick m_operatorController = new Joystick(OIConstants.kOperatorControllerPort);
   StingerSubsystem m_StingerSubsystem = new StingerSubsystem();
   ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
+  LEDSubsystem m_LedSubsystem = new LEDSubsystem();
+  
   double setPos;
   double setAng = 0.32; 
   DigitalInput limitSwitch = new DigitalInput(2);
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -49,7 +54,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-   
+    CameraServer.startAutomaticCapture(); 
   }
 
   /**
@@ -155,21 +160,29 @@ public class Robot extends TimedRobot {
       if (m_operatorController.getRawButtonPressed(3)){
         setPos = 33.3;
         new WaitCommand(0.5);
-        setAng = 0.42;
+        setAng = 0.47;
       }
       else if (m_operatorController.getRawButtonReleased(1) || m_operatorController.getRawButtonReleased(2) || m_operatorController.getRawButtonReleased(3) || m_operatorController.getRawButtonReleased(4)){
         setAng = 0.32; 
+
       }
       
       
       if (m_operatorController.getRawButtonPressed(5)){
         m_StingerSubsystem.setIntakePower(0.3);
+        m_LedSubsystem.setPattern(-0.99);
+
       }
       else if (m_operatorController.getRawButtonPressed(6)){
         m_StingerSubsystem.setIntakePower(-0.3);
+        m_LedSubsystem.setPattern(0.57);
+
       }
-      else if (m_operatorController.getRawButtonReleased(5) || m_driverController.getRawButtonReleased(6)) {
+      else if (m_operatorController.getRawButtonReleased(5) || m_operatorController.getRawButtonReleased(6)) {
         m_StingerSubsystem.setIntakePower(0);
+        m_LedSubsystem.setPattern(0.41);
+
+
       }
 
 
