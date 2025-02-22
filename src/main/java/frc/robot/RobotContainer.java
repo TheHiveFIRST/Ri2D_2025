@@ -44,7 +44,7 @@ public class RobotContainer {
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
 
-  private PathPlannerAuto plannerPath = new PathPlannerAuto("Ishana Path");
+  private PathPlannerAuto plannerPath = new PathPlannerAuto("Planner Path");
 
 //testing push
 
