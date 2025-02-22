@@ -163,7 +163,7 @@ public class Robot extends TimedRobot {
         setAng = 0.47;
       }
       else if (m_operatorController.getRawButtonReleased(1) || m_operatorController.getRawButtonReleased(2) || m_operatorController.getRawButtonReleased(3) || m_operatorController.getRawButtonReleased(4)){
-        setAng = 0.32; 
+        setAng = 0.32; //default/source angle 
 
       }
       
@@ -174,7 +174,7 @@ public class Robot extends TimedRobot {
 
       }
       else if (m_operatorController.getRawButtonPressed(6)){
-        m_StingerSubsystem.setIntakePower(-0.3);
+        m_StingerSubsystem.setIntakePower(-0.5);
         m_LedSubsystem.setPattern(0.57);
 
       }
@@ -182,6 +182,19 @@ public class Robot extends TimedRobot {
         m_StingerSubsystem.setIntakePower(0);
         m_LedSubsystem.setPattern(0.41);
 
+
+      }
+      else if (m_operatorController.getRawButtonPressed(  7)){
+        setPos = 13;
+        new WaitCommand(0.5);
+        setAng = 0.45;
+
+      }
+
+      else if (m_operatorController.getRawButtonPressed(8)){
+        setPos = 25;
+        new WaitCommand(0.5);
+        setAng = 0.45;
 
       }
 
@@ -200,8 +213,10 @@ public class Robot extends TimedRobot {
     
       m_ElevatorSubsystem.elevatorPIDControl(setPos);
       m_ElevatorSubsystem.elevatorPIDSetPower();
+      //calculate and set PID for motor 
       m_StingerSubsystem.PivotPIDControl(setAng);
-      m_StingerSubsystem.PivotPIDSetPower();
+      m_StingerSubsystem.PivotPIDSetPower(); 
+      //calculate and set
      
       if (limitSwitch.get()){
         m_ElevatorSubsystem.resetEncoder();
