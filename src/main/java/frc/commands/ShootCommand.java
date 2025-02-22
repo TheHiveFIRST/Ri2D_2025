@@ -14,7 +14,4 @@ public class ShootCommand extends Command{
     public void shoot() {
         stinger.setIntakePower(0.2);    
     }
-
-
-
 }

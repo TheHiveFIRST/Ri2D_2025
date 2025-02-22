@@ -15,6 +15,7 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
+import frc.commands.IntakeCommand;
 import frc.commands.ShootCommand;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
@@ -26,7 +27,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
-import java.util.HashMap;
+//import java.util.HashMap;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -44,8 +45,7 @@ public class RobotContainer {
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
 
-  private PathPlannerAuto ishanaPath = new PathPlannerAuto("Ishana Path");
-
+  private PathPlannerAuto ishanaPath = new PathPlannerAuto("Blue Side");
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -68,8 +68,9 @@ public class RobotContainer {
                 true),
             m_robotDrive));
 
-    // NamedCommands.registerCommand("shoot", new ShootCommand());
-  }
+            NamedCommands.registerCommand("shoot", new ShootCommand());
+            NamedCommands.registerCommand("intake", new IntakeCommand());
+          }
 
   /**
    * Use this method to define your button->command mappings. Buttons can be
@@ -85,8 +86,6 @@ public class RobotContainer {
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive));
-       
-        
   }
 
   /**

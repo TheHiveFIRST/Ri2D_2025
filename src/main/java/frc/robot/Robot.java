@@ -5,13 +5,12 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 // import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
-import frc.robot.Constants.ElevatorConstants;
+//import edu.wpi.first.wpilibj2.command.button.POVButton;
+//import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.StingerSubsystem;
@@ -103,14 +102,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
 
-    // if (Timer.getTimestamp()> 5){
-
-    //   m_StingerSubsystem.setIntakePower(0.2);
-
-      
-
-    // }
-    
   }
 
   // public Command getAutonomousCommand() {
@@ -127,11 +118,10 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-   // m_ElevatorSubsystem.resetEncoder();
-    //this is only for testing, get rid of this once pid is tuned
   }
 
   /** This function is called periodically during operator control. */
@@ -171,10 +161,6 @@ public class Robot extends TimedRobot {
       else if (m_operatorController.getRawButtonReleased(5) || m_driverController.getRawButtonReleased(6)) {
         m_StingerSubsystem.setIntakePower(0);
       }
-
-
-      
-
 
       //if(m_operatorController.getRawButtonPressed(5)){
      //   setPos = 0.3; // TEST ALGAE 1 ELevator value 
