@@ -44,7 +44,7 @@ public class RobotContainer {
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
 
-  private PathPlannerAuto ishanaPath = new PathPlannerAuto("Ishana Path");
+  private PathPlannerAuto plannerPath = new PathPlannerAuto("Ishana Path");
 
 //testing push
 
@@ -136,7 +136,7 @@ public class RobotContainer {
 
     // // Run path following command, then stop at the end.
     // return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));
-    return ishanaPath;
+    return plannerPath;
   }
 
 }
