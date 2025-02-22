@@ -45,8 +45,8 @@ public class StingerSubsystem extends SubsystemBase {
 
     public void PivotPIDControl(double targetAngle) {
          pivotOutput = m_pivotPID.calculate(m_absoluteEncoder.getPosition(), targetAngle);
-        System.out.println("pivot encoder value"+m_absoluteEncoder.getPosition());
-        System.out.println("pivot set position"+ targetAngle);
+       // System.out.println("pivot encoder value"+m_absoluteEncoder.getPosition());
+        //System.out.println("pivot set position"+ targetAngle);
     }
     public void PivotPIDSetPower(){
         m_pivotMotor.set(pivotOutput);  

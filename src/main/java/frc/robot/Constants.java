@@ -118,7 +118,7 @@ public final class Constants {
   public static final class PivotConstants {
     public static final int kPivotMotorId = 11;
     public static final int kPintakeMotorId = 12;
-    public static final double pivotKP = 1.6; 
+    public static final double pivotKP = 1.4; 
     public static final double pivotKI = 0;
     public static final double pivotKD = 0.05;
     public static final double pivotSOURCE_POSITION = 0.32;
