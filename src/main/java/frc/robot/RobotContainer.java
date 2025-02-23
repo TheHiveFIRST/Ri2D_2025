@@ -15,8 +15,8 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
-import frc.commands.IntakeCommand;
-import frc.commands.ShootCommand;
+// import frc.commands.IntakeCommand;
+// import frc.commands.ShootCommand;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
@@ -68,8 +68,8 @@ public class RobotContainer {
                 true),
             m_robotDrive));
 
-            NamedCommands.registerCommand("shoot", new ShootCommand());
-            NamedCommands.registerCommand("intake", new IntakeCommand());
+            // NamedCommands.registerCommand("shoot", new ShootCommand());
+            // NamedCommands.registerCommand("intake", new IntakeCommand());
           }
 
   /**
